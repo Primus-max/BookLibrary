@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <random>
 #include <iostream>
+#include <algorithm>
+#include <cstring>  
 
 using namespace std;
 //Random random;
@@ -119,6 +121,75 @@ void createLibrary(Book* books, int bookCount) {
 
 		books[i] = newBook;
 	}
+}
+
+Book* findBookByAuthor(Book* books, int booksCount, const char* author) {
+	if (books == nullptr) return nullptr;
+
+	for (size_t i = 0; i < booksCount; i++) 
+		if (strstr(books[i].Autor, author) != nullptr) 
+			return &books[i];	
+
+	return nullptr;
+}
+
+Book* findBookByTitle(Book* books, int booksCount, const char* title) {
+	if (books == nullptr) return nullptr;
+
+	for (size_t i = 0; i < booksCount; i++)
+		if (strstr(books[i].Title, title) != nullptr)
+			return &books[i];
+
+	return nullptr;
+}
+
+void editBook(Book* book) {
+	cout << "Отредактируйте необходимые данные: " << endl;
+
+	cout << "Название: " << book->Title << endl;
+	cin.ignore(); 
+	cin.getline(book->Title, sizeof(book->Title));
+
+	cout << "Автор: " << book->Autor << endl;
+	cin.getline(book->Autor, sizeof(book->Autor));
+
+	cout << "Издательство: " << book->PublishingHouse << endl;
+	cin.getline(book->PublishingHouse, sizeof(book->PublishingHouse));
+
+	cout << "Выберите жанр, указав цифрой: " << endl;
+	for (int i = 0; i < TOTAL_GENRES; i++)
+		cout << i + 1 << ". " << genreNames[i] << endl;
+
+	int choice;
+	cin >> choice;
+	book->Genre = static_cast<Genre>(choice - 1);
+}
+
+void sortingLibraryByTitle(Book* books, int booksCount) {
+
+	for (size_t i = 0; i < booksCount; i++)	{
+
+	}
+}
+
+void sortByTitle(Book* books, int bookCount) {
+	sort(books, books + bookCount, [](const Book& a, const Book& b) {
+		return strcmp(a.Title, b.Title) < 0;
+		});
+}
+
+// Сортировка массива по автору
+void sortByAutor(Book* books, int bookCount) {
+	sort(books, books + bookCount, [](const Book& a, const Book& b) {
+		return strcmp(a.Autor, b.Autor) < 0;
+		});
+}
+
+// Сортировка массива по издательству
+void sortByPublishingHouse(Book* books, int bookCount) {
+	sort(books, books + bookCount, [](const Book& a, const Book& b) {
+		return strcmp(a.PublishingHouse, b.PublishingHouse) < 0;
+		});
 }
 
 void displayLibrary(Book* books, int countBooks) {
