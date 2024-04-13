@@ -13,5 +13,6 @@ int main()
     Book books[BOOK_COUNT]={0};
 
     createLibrary(books, BOOK_COUNT);
+    displayLibrary(books, BOOK_COUNT);
 }
 
