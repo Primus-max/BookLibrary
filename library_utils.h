@@ -28,6 +28,7 @@ const char* genreNames[TOTAL_GENRES] = {
 
 struct  Book
 {
+	int id;
 	char Title[100]{};
 	char Autor[100]{};
 	char PublishingHouse[100]{};
@@ -118,7 +119,7 @@ void createLibrary(Book* books, int bookCount) {
 		strcpy_s(newBook.Autor, sizeof(newBook.Autor), createAutor());
 		strcpy_s(newBook.PublishingHouse, sizeof(newBook.PublishingHouse), createPublishingHouse());
 		newBook.Genre = static_cast<Genre>(rand() % 5);
-
+		newBook.id = i;
 		books[i] = newBook;
 	}
 }
@@ -162,7 +163,7 @@ void editBook(Book* book) {
 
 	int choice;
 	cin >> choice;
-	book->Genre = static_cast<Genre>(choice - 1);
+	book->Genre = static_cast<Genre>(choice - 1);	
 }
 
 void sortingLibraryByTitle(Book* books, int booksCount) {
@@ -190,6 +191,18 @@ void sortByPublishingHouse(Book* books, int bookCount) {
 	sort(books, books + bookCount, [](const Book& a, const Book& b) {
 		return strcmp(a.PublishingHouse, b.PublishingHouse) < 0;
 		});
+}
+
+void updateBook(Book* books, int booksCount, const Book& updatedBook) {
+	
+	for (int i = 0; i < booksCount; ++i) {
+		if (books[i].id == updatedBook.id) {
+	
+			books[i] = updatedBook;
+			return;
+		}
+	}	
+	cerr << "Книга с идентификатором " << updatedBook.id << " не найдена." << endl;
 }
 
 void displayLibrary(Book* books, int countBooks) {

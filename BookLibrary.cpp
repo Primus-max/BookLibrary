@@ -26,9 +26,12 @@ int main()
 	char title[100]{};
 	cin >> title;
 	Book* findedBookByTitle = findBookByTitle(books, BOOK_COUNT, title);
-
+		
 	editBook(findedBookByTitle);
-
+	updateBook(books, BOOK_COUNT, *findedBookByTitle);
+	cout << "\n\n";
+	cout << "Отредактированая книга в библиотеке: " << endl;
+	displayLibrary(books, BOOK_COUNT);
 
 	cout << "\n\n";
 	cout << "Библиотека отсортирована по названию: " << endl;
